@@ -1,0 +1,313 @@
+
+package frame.mahasiswa;
+
+import connection.Koneksi;
+import frame.admin.*;
+import frame.login.Login;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import model.Jadwal;
+import model.Mhs;
+import util.FrameSetting;
+import util.JamDigital;
+
+/**
+ *
+ * @author Randa
+ */
+public class JadwalMhsFrame extends javax.swing.JFrame {
+    private Mhs mhs;
+    private Jadwal jadwal;
+    private Connection con;
+    private Statement st;
+    private ResultSet rs;
+    private String qry;
+    
+    /**
+     * Method untuk mengambil seluruh jadwal
+     * @return jadwalList
+     */
+    public ArrayList<Jadwal> getJadwalList() {
+        ArrayList<Jadwal> jadwalList = new ArrayList<>();
+        con = Koneksi.getKoneksi();
+      
+        qry = "SELECT * FROM jadwal "
+                + "JOIN makul ON jadwal.kode_makul = makul.kode_makul "
+                + "JOIN dosen ON jadwal.nip_dosen = dosen.nip "
+                + "JOIN kelas ON jadwal.kode_kelas = kelas.kode_kelas ";
+        
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(qry);
+            while (rs.next()) {      
+                jadwal = new Jadwal(
+                        rs.getString("kode_jadwal"), 
+                        rs.getString("makul.kode_makul"), 
+                        rs.getString("makul.makul"),
+                        rs.getString("dosen.nip"), 
+                        rs.getString("dosen.nama_dosen"), 
+                        rs.getString("kelas.kode_kelas"), 
+                        rs.getString("kelas.nama_kelas"),
+                        rs.getString("semester_jadwal"),
+                        rs.getString("jam"), 
+                        rs.getString("hari"));
+                jadwalList.add(jadwal);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getJadwalList : " + e.getMessage());
+        }
+        return jadwalList;
+    }
+    
+    /**
+     * Method untuk menampilkan data jadwal ke tabel jadwal
+     */
+    public void selectJadwal() {
+        ArrayList<Jadwal> list = getJadwalList();
+        DefaultTableModel model = (DefaultTableModel) tJadwal.getModel();
+        Object[] row = new Object[8];
+        int no = 1;
+        
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = no++;
+            row[1] = list.get(i).getKodeJadwal();
+            row[2] = list.get(i).getMakul().getMakul();
+            row[3] = list.get(i).getDosen().getNama();
+            row[4] = list.get(i).getKelas().getKelas();
+            row[5] = list.get(i).getSemester();
+            row[6] = list.get(i).getJam();
+            row[7] = list.get(i).getHari();
+            model.addRow(row);
+        }
+    }
+    
+    /**
+     * Method untuk mengatur ulang / refresh tabel jadwal
+     */
+    public final void resetTable() {
+        DefaultTableModel model = (DefaultTableModel) tJadwal.getModel();
+        model.setRowCount(0);
+        selectJadwal();
+    }
+    
+    /**
+     * Method untuk mengatur lebar kolom tabel jadwal
+     */
+    public void lebarKolom(){ 
+        TableColumn column;
+        tJadwal.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        column = tJadwal.getColumnModel().getColumn(0); 
+        column.setPreferredWidth(30);
+        column = tJadwal.getColumnModel().getColumn(1); 
+        column.setPreferredWidth(100);
+        column = tJadwal.getColumnModel().getColumn(2); 
+        column.setPreferredWidth(234); 
+        column = tJadwal.getColumnModel().getColumn(3); 
+        column.setPreferredWidth(310); 
+        column = tJadwal.getColumnModel().getColumn(4); 
+        column.setPreferredWidth(70); 
+        column = tJadwal.getColumnModel().getColumn(5); 
+        column.setPreferredWidth(90); 
+        column = tJadwal.getColumnModel().getColumn(6); 
+        column.setPreferredWidth(95); 
+        column = tJadwal.getColumnModel().getColumn(7); 
+        column.setPreferredWidth(95); 
+    }
+    
+    /**
+     * Method Constructor
+     */
+    public JadwalMhsFrame() {
+        initComponents();
+        FrameSetting.setFrame(this);
+        lebarKolom();
+        JamDigital.getJam(lbl_jam);
+        resetTable();
+    }
+    
+    /**
+     * Method Constructor
+     * @param mhs 
+     */
+    public JadwalMhsFrame(Mhs mhs) {
+        initComponents();
+        this.mhs = mhs;
+        FrameSetting.setFrame(this);
+        lebarKolom();
+        JamDigital.getJam(lbl_jam);
+        resetTable();
+    }
+    
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        bKembali = new javax.swing.JLabel();
+        bLogout = new javax.swing.JLabel();
+        bExit = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tJadwal = new javax.swing.JTable();
+        lbl_jam = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        bKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/button/back.png"))); // NOI18N
+        bKembali.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bKembaliMouseClicked(evt);
+            }
+        });
+        getContentPane().add(bKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 10, 70, 90));
+
+        bLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/button/logout.png"))); // NOI18N
+        bLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bLogoutMouseClicked(evt);
+            }
+        });
+        getContentPane().add(bLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 10, 70, 90));
+
+        bExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/button/exit.png"))); // NOI18N
+        bExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bExitMouseClicked(evt);
+            }
+        });
+        getContentPane().add(bExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 10, 90, 90));
+
+        tJadwal.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        tJadwal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No.", "Kode Jadwal", "Matakuliah", "Dosen", "Kelas", "Semester", "Jam", "Hari"
+            }
+        ));
+        tJadwal.setGridColor(new java.awt.Color(0, 0, 0));
+        tJadwal.setMinimumSize(new java.awt.Dimension(100, 0));
+        jScrollPane1.setViewportView(tJadwal);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 1030, 460));
+
+        lbl_jam.setFont(new java.awt.Font("Microsoft YaHei", 1, 20)); // NOI18N
+        lbl_jam.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_jam.setText("Jam");
+        getContentPane().add(lbl_jam, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 153));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("DATA JADWAL");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, -1, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 110));
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 660));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void bExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bExitMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_bExitMouseClicked
+
+    private void bKembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bKembaliMouseClicked
+        // TODO add your handling code here:
+        new MenuUtamaMhs(mhs).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_bKembaliMouseClicked
+
+    private void bLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bLogoutMouseClicked
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_bLogoutMouseClicked
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(JadwalMhsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(JadwalMhsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(JadwalMhsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(JadwalMhsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new JadwalMhsFrame().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bExit;
+    private javax.swing.JLabel bKembali;
+    private javax.swing.JLabel bLogout;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_jam;
+    private javax.swing.JTable tJadwal;
+    // End of variables declaration//GEN-END:variables
+}

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9aa76876-bcaa-429b-bdfc-cccd9bef21ba">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="prog_studi" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM mhs WHERE prog_studi = $P{prog_studi};]]>
+	</queryString>
+	<field name="id_mhs" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="npm" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="j_kelamin" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prog_studi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_lahir" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tempat_lahir" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="password" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="foto" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="78" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="29" width="555" height="37" uuid="888dd40c-e77d-4379-8793-da152e75298b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DAFTAR MAHASISWA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="77" width="555" height="1" uuid="ecca4e6b-332c-4b87-a051-b2f562912064"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="11" width="88" height="20" uuid="75876bbb-6e60-47b9-9196-6e729b7332fd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Program Studi  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="30" width="88" height="20" uuid="3686261e-cde1-4117-ad02-080699b1ade3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tahun Ajaran   :]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="102" y="30" width="100" height="20" uuid="0c4a1a6a-8c44-4905-b808-f03b45ece457"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="11" width="216" height="20" uuid="35d7e33e-2747-4ddd-a8de-2c76cba67c9f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prog_studi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="40" height="20" uuid="6eec34c2-d4de-45c8-ad98-b8098343f764"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="40" y="0" width="76" height="20" uuid="f5ba0ee6-d278-4374-82d0-705a08f94351"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="116" y="0" width="256" height="20" uuid="cc7fa6f0-748d-4f15-a9f7-e06a624442f5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="372" y="0" width="183" height="20" uuid="f428d48d-67b0-49a1-bb18-5ba309665572"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="372" y="0" width="183" height="20" uuid="78de5b6e-d505-42cd-990b-187d6ef5c10a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jenis Kelamin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="0" width="256" height="20" uuid="62737a8a-5841-4583-b4ba-91e8ba7938ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="76" height="20" uuid="b7d963fd-ed52-449c-81b6-2f7bcd7e8bad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NPM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="20" uuid="1a030e47-06ee-4c1d-80d6-d777953cfe73"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="40" height="20" uuid="e1d7bb14-7e06-4a1d-bb3e-f96c874037ad"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="40" y="0" width="76" height="20" uuid="f7a73dd5-4f51-400d-8c51-20ae08f461d2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="116" y="0" width="256" height="20" uuid="d76efc8c-e603-450e-bfdf-70c3696c5126"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="372" y="0" width="183" height="20" uuid="40fc500d-f578-46d4-ae85-1baf740c5246"/>
+			</rectangle>
+			<textField>
+				<reportElement x="40" y="0" width="76" height="20" uuid="35bb024d-e980-49f3-b996-5b25fd07c968"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{npm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="0" width="256" height="20" uuid="68f1bd37-dc98-4249-9cd1-178a11948f6e"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="0" width="183" height="20" uuid="ce2ba35c-5881-4bc3-8b4b-2e8fc955eaf5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{j_kelamin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="40" height="20" uuid="e5aad283-091e-4289-a13f-4d612bae3005"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="44" width="555" height="1" uuid="c802743b-d786-43ac-b43d-e7a39e87f28f"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="20" uuid="bf005616-3116-499a-a0ba-0683358dbb44"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
